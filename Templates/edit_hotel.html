@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Hotel Details</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <style>
+        body {
+            background-color: #f3f4f6;
+            font-family: 'Inter', sans-serif;
+            color: #1f2937;
+        }
+        .main-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        .img-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        .img-wrapper img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .delete-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            border-radius: 50%;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="main-container">
+    <h3 class="mb-4"><i class="bi bi-pencil-square text-primary"></i> Edit Hotel Information</h3>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <form action="{% url 'edit_hotel' provider.id %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row g-3 mb-4">
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Hotel Name</label>
+                <input type="text" class="form-control" name="HotelName" value="{{ provider.HotelName }}" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">City</label>
+                <input type="text" class="form-control" name="City" value="{{ provider.city }}" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Contact Mobile</label>
+                <input type="text" class="form-control" name="Mobile" value="{{ provider.phone }}" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Address</label>
+                <input type="text" class="form-control" name="Address" value="{{ provider.address }}" required>
+            </div>
+            <div class="col-12">
+                <label class="form-label fw-semibold">Description</label>
+                <textarea class="form-control" name="Msg" rows="4" required>{{ provider.msg }}</textarea>
+            </div>
+        </div>
+        <hr>
+        <h5 class="mb-3 mt-4">Manage Images</h5>
+        <div class="row g-3 mb-4">
+            {% for image in images %}
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="img-wrapper shadow-sm">
+                        <img src="data:image/jpeg;base64,{{ image.base64 }}" alt="Hotel Image">
+                        <a href="{% url 'delete_image' image.id %}" class="btn btn-danger btn-sm delete-btn shadow" onclick="return confirm('Are you sure you want to delete this image?');">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-muted">No images available. Please upload some below.</p>
+            {% endfor %}
+        </div>
+        <div class="mb-4">
+            <label class="form-label fw-semibold">Upload Additional Images</label>
+            <input class="form-control" type="file" name="hotel_images" multiple accept="image/*">
+            <small class="text-muted">You can select multiple images to upload.</small>
+        </div>
+        <div class="d-flex justify-content-end gap-2 mt-5">
+            <button type="button" onclick="history.back()" class="btn btn-outline-secondary px-4">Cancel</button>
+            <button type="submit" class="btn btn-primary px-4"><i class="bi bi-save me-1"></i> Save Changes</button>
+        </div>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

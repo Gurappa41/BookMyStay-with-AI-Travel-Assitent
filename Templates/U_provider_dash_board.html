@@ -1,0 +1,524 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Provider Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.9);
+            --glass-shadow: 0 12px 40px rgba(31, 38, 135, 0.08);
+            --text-dark: #1e293b;
+            --text-muted: #475569;
+            --gradient-primary: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --gradient-danger: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+        body {
+            background-image: url('https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=2029&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px) saturate(120%);
+            -webkit-backdrop-filter: blur(24px) saturate(120%);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+        }
+        .navbar-custom {
+            height: 76px;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        }
+        #brand-logo {
+            height: 45px;
+            width: 150px;
+            background-image: url("{% static 'Images/withoutback.png' %}");
+            background-size: contain;
+            background-position: left center;
+            background-repeat: no-repeat;
+        }
+        .provider-profile {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .provider-name {
+            font-weight: 700;
+            color: var(--text-dark);
+            font-size: 1.05rem;
+        }
+        .profile-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--gradient-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+            border: 2px solid white;
+        }
+        .btn-logout {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            color: var(--text-dark);
+            border-radius: 10px;
+            padding: 8px 16px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            margin-left: 10px;
+            border-left: 1px solid rgba(0,0,0,0.1);
+        }
+        .btn-logout:hover {
+            background: #fef2f2;
+            color: #dc2626;
+            border-color: #fca5a5;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.15);
+        }
+        .btn-history {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            color: var(--text-dark);
+            border-radius: 10px;
+            padding: 8px 16px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            margin-left: auto;
+        }
+        .btn-history:hover {
+            background: #f0f9ff;
+            color: #0369a1; 
+            border-color: #bae6fd;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.15);
+        }
+        .main-container {
+            max-width: 1240px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .page-header {
+            margin-bottom: 30px;
+            padding: 24px 30px;
+            border-radius: 20px;
+        }
+        .page-header h2 {
+            font-weight: 800;
+            margin-bottom: 6px;
+            color: var(--text-dark);
+            letter-spacing: -0.5px;
+        }
+        .page-header p {
+            color: var(--text-muted);
+            margin: 0;
+            font-weight: 500;
+            font-size: 1.05rem;
+        }
+        .dashboard-card {
+            border-radius: 20px;
+            margin-bottom: 35px;
+            overflow: hidden;
+            position: relative;
+        }
+        .card-header-custom {
+            padding: 24px 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.4);
+        }
+        .card-header-custom h4 {
+            margin: 0;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-custom {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid white;
+            color: var(--text-dark);
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+        }
+        .btn-custom:hover {
+            background: white;
+            color: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+        }
+        .card-body-custom {
+            padding: 30px;
+        }
+        .section-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #64748b;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+        .detail-box {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            padding: 20px 24px;
+            border-radius: 16px;
+            transition: transform 0.3s ease;
+        }
+        .detail-box:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.7);
+        }
+        .detail-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .detail-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        .description-box {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            padding: 24px;
+            border-radius: 16px;
+            line-height: 1.8;
+            font-weight: 500;
+            color: #334155;
+        }
+        .hotel-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 16px;
+            border: 3px solid rgba(255, 255, 255, 0.8);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .hotel-image:hover {
+            transform: scale(1.04) translateY(-4px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+        }
+        .table-responsive {
+            margin: 0;
+            padding: 10px 30px 30px 30px;
+        }
+        .table-custom {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 12px;
+        }
+        .table-custom th {
+            border: none;
+            color: #64748b;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0 24px;
+            background: transparent;
+        }
+        .table-custom td {
+            background: rgba(255, 255, 255, 0.7);
+            border-top: 1px solid rgba(255, 255, 255, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.9);
+            padding: 20px 24px;
+            vertical-align: middle;
+            backdrop-filter: blur(12px);
+            transition: all 0.2s;
+        }
+        .table-custom tr:hover td {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            transform: scale(1.002);
+        }
+        .table-custom td:first-child {
+            border-left: 1px solid rgba(255, 255, 255, 0.9);
+            border-radius: 16px 0 0 16px;
+        }
+        .table-custom td:last-child {
+            border-right: 1px solid rgba(255, 255, 255, 0.9);
+            border-radius: 0 16px 16px 0;
+        }
+        .guest-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+        .date-badge {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 1);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: inline-block;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            color: var(--text-dark);
+        }
+        .form-control-glass {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid white;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 10px;
+            padding: 10px 14px;
+            min-width: 140px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .form-control-glass:focus {
+            background: #ffffff;
+            border-color: #3b82f6;
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+        }
+        .btn-action {
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border: none;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .btn-accept {
+            background: var(--gradient-success);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        }
+        .btn-accept:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
+        }
+        .btn-reject {
+            background: white;
+            color: #dc2626;
+            border: 2px solid #fee2e2;
+        }
+        .btn-reject:hover {
+            background: #fef2f2;
+            border-color: #fca5a5;
+            transform: translateY(-2px);
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(148, 163, 184, 0.5);
+            border-radius: 10px;
+        }
+        @media(max-width: 768px) {
+            .navbar-custom { padding: 0 20px; }
+            .info-grid { grid-template-columns: 1fr; }
+            .action-forms { flex-direction: column; align-items: stretch; gap: 12px; }
+            .form-control-glass { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar-custom">
+    <div id="brand-logo"></div>
+    <div class="provider-profile">
+        <span class="provider-name d-none d-sm-block">{{ provider.HotelName }}</span>
+        <div class="profile-icon">
+            <i class="bi bi-person-fill"></i>
+        </div>
+        <a href="{% url 'accept_history' provider.id %}" class="btn-history ms-3">
+            <i class="bi bi-clock-history text-primary"></i>
+            <span class="d-none d-sm-inline">History</span>
+        </a>
+        <a href="/" class="btn-logout">
+            <i class="bi bi-box-arrow-right"></i>
+            <span class="d-none d-sm-inline">Logout</span>
+        </a>
+    </div>
+</nav>
+<div class="main-container">
+    <div class="page-header glass-panel">
+        <h2>Property Management</h2>
+        <p>Review incoming bookings and maintain your hotel configuration securely.</p>
+    </div>
+    <div class="dashboard-card glass-panel">
+        <div class="card-header-custom">
+            <h4>
+                <div class="d-flex align-items-center justify-content-center bg-white rounded-circle me-3 shadow-sm" style="width: 38px; height: 38px;">
+                    <i class="bi bi-building-fill text-primary" style="font-size: 1.1rem;"></i>
+                </div>
+                {{ provider.HotelName }}
+            </h4>
+            <a href="{% url 'edit_hotel' provider.id %}" class="btn-custom text-decoration-none">
+                <i class="bi bi-pencil-square me-2"></i>Edit Details
+            </a>
+        </div>
+        <div class="card-body-custom">
+            <div class="section-title">Core Information</div>
+            <div class="info-grid">
+                <div class="detail-box">
+                    <div class="detail-label"><i class="bi bi-geo-alt-fill text-primary"></i> City Location</div>
+                    <div class="detail-value">{{ provider.city }}</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label"><i class="bi bi-person-badge-fill text-primary"></i> Registered Provider</div>
+                    <div class="detail-value">{{ provider.name }}</div>
+                </div>
+                <div class="detail-box" style="grid-column: 1 / -1;">
+                    <div class="detail-label"><i class="bi bi-map-fill text-primary"></i> Full Address</div>
+                    <div class="detail-value">{{ provider.address }}</div>
+                </div>
+            </div>
+            <div class="section-title">Property Overview</div>
+            <div class="description-box mb-5">
+                {{ provider.msg }}
+            </div>
+            <div class="section-title">Visual Assets</div>
+            <div class="row g-4 mt-2">
+                {% for image in images %}
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <img src="data:image/jpeg;base64,{{ image.base64 }}" class="hotel-image" alt="Hotel Image">
+                    </div>
+                {% empty %}
+                    <div class="col-12">
+                        <div class="text-center p-5" style="background: rgba(255,255,255,0.4); border: 2px dashed rgba(255,255,255,0.8); border-radius: 16px;">
+                            <i class="bi bi-images fs-1 text-muted mb-3 d-block"></i>
+                            <span class="fw-bold text-muted">No media assets configured yet.</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="dashboard-card glass-panel">
+        <div class="card-header-custom">
+            <h4>
+                <div class="d-flex align-items-center justify-content-center bg-white rounded-circle me-3 shadow-sm" style="width: 38px; height: 38px;">
+                    <i class="bi bi-bell-fill text-warning" style="font-size: 1.1rem;"></i>
+                </div>
+                Active Booking Requests
+            </h4>
+        </div>
+        <div class="table-responsive">
+            <table class="table-custom">
+                <thead>
+                    <tr>
+                        <th>Guest Information</th>
+                        <th>Contact Details</th>
+                        <th>Reservation Dates</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for req in respon %}
+                    <tr>
+                        <td>
+                            <div class="guest-name">{{ req.name }}</div>
+                            <div class="text-muted fw-semibold" style="font-size: 0.9rem;">
+                                <i class="bi bi-envelope-at me-2 text-primary"></i>{{ req.email }}
+                            </div>
+                        </td>
+                        <td>
+                            <span class="fw-bold text-dark"><i class="bi bi-telephone-fill me-2 text-primary"></i>{{ req.phone }}</span>
+                        </td>
+                        <td>
+                            <div class="d-flex flex-column gap-2">
+                                <span class="date-badge"><span class="text-success me-2">IN</span> {{ req.checkin }}</span>
+                                <span class="date-badge"><span class="text-danger me-2">OUT</span> {{ req.checkout }}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex justify-content-end align-items-start gap-3 action-forms">
+                                <form action="{% url 'accept_request' provider.id req.email req.id %}" method="POST" class="m-0 d-flex gap-2">
+                                    {% csrf_token %}
+                                    <input type="text" class="form-control-glass" placeholder="Room No." name="roomnumber" required>
+                                    <button type="submit" class="btn-action btn-accept d-flex align-items-center gap-2">
+                                        <i class="bi bi-check2-circle fs-5"></i> Accept
+                                    </button>
+                                </form>
+                                <form action="{% url 'accept_request' provider.id req.email req.id %}" method="GET" class="m-0">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn-action btn-reject d-flex align-items-center gap-2">
+                                        <i class="bi bi-x-circle fs-5"></i> Reject
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center py-5">
+                            <div class="d-inline-block p-4" style="background: rgba(255,255,255,0.5); border-radius: 20px;">
+                                <i class="bi bi-inbox fs-1 text-primary mb-3 d-block"></i>
+                                <span class="fw-bold fs-5 text-dark">Inbox Zero</span>
+                                <p class="text-muted mt-1 mb-0 fw-medium">There are no pending requests to process.</p>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

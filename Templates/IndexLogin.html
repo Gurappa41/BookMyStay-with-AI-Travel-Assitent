@@ -1,0 +1,206 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hotel Booking</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <!-- SweetAlert2 for beautiful popups -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        body {
+            height: 100vh;
+            width: 100vw;
+            background-image: url("{% static 'Images/indexbackground.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+        }
+        #mask {
+            height: 100vh;
+            width: 100vw;
+            min-height: 100vh;
+            background-color: rgba(7, 7, 7, 0.319);
+        }
+        #textholder {
+            height: 45%;
+            width: 40%;
+            background-color: rgba(0, 0, 0, 0.45);
+            margin-top: 15%;
+            margin-left: 5%;
+        }
+        #title {
+            margin-top: 1vh;
+            margin-left: 1vw;
+            height: 15vh;
+            width: 25%;
+            background-image: url("{% static 'Images/withoutback.png' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .modal-backdrop {
+            backdrop-filter: blur(5px);
+        }
+        .register-form {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<div id="mask">
+    <div class="d-flex">
+        <div id="title">
+        </div>
+        <div id="butonholder"
+             class="ms-auto p-3 d-flex align-items-center justify-content-center gap-3">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#LoginModal">
+              Login
+            </button>
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                    Register
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#providerModal">
+                            Hotel Provider
+                        </button>
+                    </li>
+                    <li>
+                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#CustomerModal">
+                            Customer
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="textholder" class="p-5" style="color:white">
+        <h1 class="my-3">Your next stay starts here.</h1>
+        <p style="text-align: justify;">
+            Looking for a comfortable place to stay?
+            Explore hotels from different providers, compare your options,
+            and choose the one that works best for you.
+            Hotel owners can reach new guests and manage their bookings,
+            while travelers get a simple way to find and reserve their stay.
+        </p>
+    </div>
+</div>
+
+<!--Customer Registration Modal -->
+<div class="modal fade" id="CustomerModal" aria-labelledby="CustomerModalLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="CustomerModalLabel">Customer Registration</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="Customerstorage/" method="POST">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="mb-3"><label class="form-label">Name</label><input type="text" class="form-control" placeholder="Enter name" name="Name" required></div>
+                    <div class="mb-3"><label class="form-label">Mobile Number</label><input type="tel" maxlength="10"   class="form-control" placeholder="Enter mobile number" name="Mobile" required></div>
+                    <div class="mb-3"><label class="form-label">Email</label><input type="email" class="form-control" placeholder="Enter email" name="Email" required></div>
+                    <div class="mb-3"><label class="form-label">Password</label><input type="password" class="form-control" placeholder="Create password" name="Password1" required></div>
+                    <div class="mb-3"><label class="form-label">Confirm Password</label><input type="password" class="form-control" placeholder="Confirm password" name="Password2" required></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Hotel Provider Registration Modal-->
+<div class="modal fade" id="providerModal" tabindex="-1" aria-labelledby="providerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="providerModalLabel">Hotel Provider Registration</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="register-form" method="post" action="Providerstorage/" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3"><label class="form-label">Name</label><input type="text" class="form-control" placeholder="Enter name" name="Name" required></div>
+                    <div class="mb-3"><label class="form-label">Mobile Number</label><input type="tel" class="form-control" placeholder="Enter mobile number" name="Mobile" required></div>
+                    <div class="mb-3"><label class="form-label">Email</label><input type="email" class="form-control" placeholder="Enter email" name="Email" required></div>
+                    <div class="mb-3"><label class="form-label">Hotel Name</label><input type="text" class="form-control" placeholder="Enter hotel name" name="HotelName" required></div>
+                    <div class="mb-3"><label class="form-label">Hotel Type (In Stars)</label><input type="text" class="form-control" placeholder="Enter hotel Type" name="Type" required></div>
+                    <div class="mb-3"><label class="form-label">Staring Price</label><input type="text" class="form-control" placeholder="Base Price" name="Price" required></div>
+                    <div class="mb-3"><label class="form-label">City</label><input type="text" class="form-control" placeholder="City" name="City" required></div>
+                    <div class="mb-3"><label class="form-label">Address</label><input type="text" class="form-control" placeholder="Address" name="Address" required></div>
+                    <div class="mb-3"><label class="form-label">Password</label><input type="password" class="form-control" placeholder="Create password" name="Password1" required></div>
+                    <div class="mb-3"><label class="form-label">Confirm Password</label><input type="password" class="form-control" placeholder="Confirm password" name="Password2" required></div>
+                    <div class="mb-3"><label for="hotelImage" class="form-label">Hotel Image</label><input type="file" class="form-control" id="hotelImage" name="hotel_images" accept="image/*" multiple required></div>
+                    <div class="mb-3"><label for="Description" class="form-label">Description in 350 characters</label><textarea class="form-control" id="Description" rows="4" placeholder="Description.." name="Msg" maxlength="350" required></textarea></div>
+                    <button type="submit" class="btn btn-primary w-100">Register Hotel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Login Module -->
+<div class="modal fade" id="LoginModal" tabindex="-1" aria-labelledby="LoginModalLabel" aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="LoginModalLabel">Login</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- UPDATED TO USE POST METHOD FOR SECURITY -->
+                <form method="POST" action="login/">
+                    {% csrf_token %}
+                     <div class="mb-3">
+                         <label class="form-label">Select Login Type</label>
+                        <select name="Type" class="form-select">
+                            <option value="Cust">Customer</option>
+                            <option value="Pro">Provider</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" placeholder="Enter email" name="Email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control" placeholder="Enter password" name="Password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SWEETALERT POPUP TRIGGER -->
+{% if messages %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            {% for message in messages %}
+                Swal.fire({
+                    // Automatically choose icon based on message tags (error vs success)
+                    icon: '{% if message.tags == "error" %}error{% else %}success{% endif %}',
+                    title: '{% if message.tags == "error" %}Oops...{% else %}Success!{% endif %}',
+                    text: '{{ message }}',
+                    confirmButtonColor: '#0d6efd',
+                    timer: 4000, // Optional: auto-close after 4 seconds
+                    timerProgressBar: true
+                });
+            {% endfor %}
+        });
+    </script>
+{% endif %}
+
+</body>
+</html>
