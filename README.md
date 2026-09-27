@@ -158,7 +158,7 @@ AI Generates Structured Response to Customer
 ⚙️ Installation & Setup
 
 Clone the Repository
-git clone https://github.com/your-username/BookMyStay.git
+[git clone https://github.com/Gurappa41/BookMyStay-with-AI-Travel-Assitent.git]
 cd BookMyStay
 
 Create a Virtual Environment
@@ -201,9 +201,6 @@ python manage.py migrate
 
 Start the Server
 python manage.py runserver
-
-Open the application in your browser:
-http://127.0.0.1:8000/
 
 📚 What I Learned
 Developing BookMyStay gave me practical experience in building a complete web application using Django.
