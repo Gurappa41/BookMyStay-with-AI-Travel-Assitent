@@ -1,247 +1,255 @@
-🏨 BookMyStay with AI Travel Assistant
+BookMyStay – Hotel Booking Web Application
+BookMyStay is a full-stack hotel booking web application developed using Python, Django, MySQL, HTML, CSS, JavaScript, and Bootstrap.
+The application is designed to provide a simple platform where customers can discover hotels, send booking requests, and interact with an intelligent AI Travel Concierge, while hotel providers can manage their properties and respond to customer requests.
+The project focuses on implementing a complete real-world workflow, including authentication, hotel management, booking requests, image handling, database operations, email communication, and GenAI tool calling.
+🚀 Key Features
+👤 Customer Features
 
-A modern full-stack hotel booking web application built with Python, Django, MySQL, HTML, CSS, JavaScript, and Bootstrap, enhanced with an AI-powered Travel Assistant using Google Gemini.
+Customer registration and login
 
-BookMyStay allows customers to search hotels, send booking requests, receive booking confirmations, while hotel providers manage their hotels, bookings, and customer interactions. The integrated AI assistant helps users discover destinations, plan trips, search hotels, and answer travel-related questions.
+Search hotels based on location
 
-🚀 Features
-👤 Customer
-Customer Registration & Login
-Browse Hotels
-Search Hotels by City
-Hotel Details Page
-View Multiple Hotel Images
-Hotel Ratings
-Send Booking Requests
-Booking Confirmation via Email
-Booking History
-🏨 Hotel Provider
-Provider Registration & Login
-Add New Hotels
-Update Hotel Details
-Upload Multiple Images
-Delete Hotel Images
-View Customer Booking Requests
-Accept / Reject Requests
-Booking History Management
-📧 Email Notifications
-Customer Booking Request Email
-Booking Acceptance Email
-Booking Rejection Email
-Automated Email Communication
-🤖 AI Travel Assistant (Google Gemini)
+Browse available hotels
 
-The latest version introduces an intelligent AI Travel Assistant capable of:
+View complete hotel details
 
-🌍 Destination Recommendations
-🧳 Personalized Trip Planning
-🏨 Hotel Search from BookMyStay Database
-📍 Travel Guidance
-🩺 Basic Travel Health Tips
-🚨 Emergency Helpline Information
-💬 Natural Language Conversations
+View hotel images, descriptions, pricing, address, and ratings
 
-Unlike a normal chatbot, the assistant can search hotels directly from the BookMyStay database and recommend suitable stays.
+Submit hotel booking requests
 
-🔍 Hotel Discovery
-Search Hotels by Location
-Hotel Cards
-Detailed Hotel Information
-Hotel Images Gallery
-Star Rating
-Hotel Pricing
-Responsive Design
-💻 Technology Stack
+Receive booking responses through email
+
+View booking information and history
+
+Interactive chat with an AI Travel Concierge
+🏨 Hotel Provider Features
+
+Provider registration and login
+
+Add new hotel properties
+
+Edit and update hotel information
+
+Manage pricing, address, descriptions, and other details
+
+Upload multiple hotel images
+
+Delete individual hotel images
+
+View customer booking requests
+
+Accept booking requests with room allotment
+
+Decline booking requests with automated email notification
+
+Manage booking and acceptance history
+🤖 AI Travel Concierge Features
+
+AI-powered travel assistant using Gemini 3.6 Flash
+
+Database tool calling with search_hotels function to fetch live hotel data
+
+Destination recommendations based on travel preferences and budgets
+
+Trip planning and custom itinerary generation
+
+Basic non-diagnostic travel health tips and packing advice
+
+Emergency helpline integration for Indian traveler support (112, 1363, 108, 1091)
+
+Domain guardrails restricting out-of-scope queries
+📩 Booking & Email System
+
+Customer booking request workflow
+
+Provider-side request management
+
+Booking acceptance process
+
+Booking decline notifications
+
+Automated email notifications
+
+Email confirmation/response to customers
+
+Booking status and history management
+🔎 Hotel Discovery
+
+Location-based hotel search
+
+Dynamic hotel listings
+
+Hotel cards with important information
+
+Dedicated hotel details pages
+
+Star-based hotel classification
+
+Responsive hotel image display
+🛠️ Technology Stack
 Backend
+
 Python
+
 Django
+
 Django ORM
+AI & LLM
+
+Google GenAI SDK
+
+Gemini 3.6 Flash
+
+Function Calling / Tool Calling
 Frontend
+
 HTML5
+
 CSS3
+
 JavaScript
-Bootstrap 5
+
+Bootstrap
+
 Bootstrap Icons
 Database
+
 MySQL
-AI
-Google Gemini API
 Other
+
 Django Templates
+
 Email Integration
-Image Upload
-CRUD Operations
-🔄 Application Workflow
+
+Media/Image Handling
+🔄 How It Works
+Customer Flow
 Customer
-      │
-      ▼
+↓
 Register / Login
-      │
-      ▼
-Browse Hotels
-      │
-      ▼
-Search Hotels
-      │
-      ▼
+↓
+Search Hotels / Ask AI Concierge
+↓
 View Hotel Details
-      │
-      ▼
+↓
 Send Booking Request
-      │
-      ▼
-Provider Receives Request
-      │
-      ▼
-Accept / Reject Booking
-      │
-      ▼
+↓
+Hotel Provider Receives Request & Email
+↓
+Provider Accepts Request (or Declines)
+↓
 Customer Receives Email
-      │
-      ▼
+↓
 Booking History Updated
-🤖 AI Assistant Workflow
-User
-   │
-   ▼
-Ask AI Assistant
-   │
-   ▼
-Google Gemini
-   │
-   ▼
-Travel Suggestions
-Trip Planning
-Hotel Search
-Health Tips
-Emergency Help
-📂 Project Structure
-BookMyStay/
-│
-├── Templates/
-├── Static/
-├── database/
-├── media/
-├── manage.py
-├── requirements.txt
-├── README.md
-└── db.sqlite3 / MySQL
-⚙️ Installation
-Clone Repository
-git clone https://github.com/Gurappa41/BookMyStay-with-AI-Travel-Assistant-.git
-cd BookMyStay-with-AI-Travel-Assistant-
-Create Virtual Environment
+
+AI Concierge Flow
+Customer Sends Chat Message
+↓
+Gemini 3.6 Flash Analyzes Query
+↓
+Tool Call Triggered: search_hotels(city)
+↓
+Django ORM Queries MySQL Database
+↓
+Hotel Details Returned to Gemini
+↓
+AI Generates Structured Response to Customer
+
+⚙️ Installation & Setup
+
+Clone the Repository
+git clone https://github.com/your-username/BookMyStay.git
+cd BookMyStay
+
+Create a Virtual Environment
 python -m venv venv
 
-Windows
-
+Activate it on Windows:
 venv\Scripts\activate
 
-Linux / Mac
-
-source venv/bin/activate
 Install Dependencies
 pip install -r requirements.txt
-Configure Database
 
-Update your MySQL credentials inside settings.py.
-
+Configure MySQL and Settings
+Create a MySQL database and update the database credentials in Django's settings.py
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "bookmystay",
-        "USER": "root",
-        "PASSWORD": "your_password",
-        "HOST": "localhost",
-        "PORT": "3306",
-    }
+'default': {
+'ENGINE': 'django.db.backends.mysql',
+'NAME': 'bookmystay',
+'USER': 'root',
+'PASSWORD': 'your_password',
+'HOST': 'localhost',
+'PORT': '3306',
 }
-Configure Environment Variables
+}
 
-Store sensitive credentials as environment variables instead of hardcoding them.
+Configure Email Settings in settings.py:
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'your_email@gmail.com'
+EMAIL_HOST_PASSWORD = 'your_app_password'
 
-EMAIL_HOST_USER=your_email
-EMAIL_HOST_PASSWORD=your_password
-GEMINI_API_KEY=your_api_key
+Set Gemini API Key
+Set your Gemini API key in your environment variables:
+set GEMINI_API_KEY="your_gemini_api_key"
+
 Run Migrations
 python manage.py makemigrations
 python manage.py migrate
-Run Server
+
+Start the Server
 python manage.py runserver
 
-Visit
-
+Open the application in your browser:
 http://127.0.0.1:8000/
-📸 Screenshots
 
-Add screenshots here.
-
-Home Page
-
-Customer Dashboard
-
-Hotel Details
-
-Provider Dashboard
-
-Booking Request
-
-AI Travel Assistant
-📚 Learning Outcomes
-
-This project helped me gain practical experience in:
-
-Django MVC Architecture
-Django ORM
-CRUD Operations
-Authentication
-Sessions
-MySQL Integration
-Image Upload & Management
-Email Automation
-RESTful Design Principles
-Google Gemini API Integration
-AI Prompt Engineering
-Responsive Web Design
-Debugging & Problem Solving
+📚 What I Learned
+Developing BookMyStay gave me practical experience in building a complete web application using Django.
+Through this project, I worked with Django models, views, forms, URL routing, templates, ORM, MySQL, CRUD operations, authentication, sessions, image uploads, and email integration.
+I also gained hands-on experience integrating Generative AI using the Google GenAI SDK (Gemini 3.6 Flash) and implementing function calling (tool calling) to connect an LLM directly to live database queries.
+One of the main learning experiences was implementing the interaction between customers and hotel providers. The application handles the complete flow from hotel discovery and booking requests to provider approval, email communication, and booking history.
+This project also helped me understand how frontend, backend, AI models, and database components work together to create a functional and responsive web application.
 🔮 Future Enhancements
-💳 Online Payments
-📱 SMS Notifications
-⭐ Reviews & Ratings
-❤️ Wishlist
-📅 Room Availability Calendar
-🔐 OTP Authentication
-🔄 Password Reset
-📍 Google Maps Integration
-🌦️ Weather Information
-🎤 Voice-based AI Assistant
-📱 Mobile Responsive PWA
-☁️ Cloud Deployment (AWS / Render)
+Some features that can be added in future versions include:
+
+💳 Online payment integration
+
+🛏️ Room availability management
+
+⭐ Customer reviews and ratings
+
+🔍 Advanced hotel filters
+
+❌ Booking cancellation
+
+🗺️ Map and location integration
+
+🔐 OTP and password reset
+
+🔗 REST API using Django REST Framework
+
+☁️ Cloud deployment
 👨‍💻 Developer
+Gurappa B.Tech – Computer Science & Engineering (AI & ML)
+Skills: Python | Django | MySQL | LLMs & GenAI | HTML | CSS | JavaScript | Bootstrap
+⭐ Project Highlights
 
-Gurappa
+Full-stack Django web application
 
-B.Tech – Computer Science & Engineering (AI & ML)
+Customer and hotel provider workflows
 
-Skills
+AI Travel Concierge with real-time database tool calling
 
-Python
-Django
-MySQL
-HTML
-CSS
-JavaScript
-Bootstrap
-Google Gemini API
-Git & GitHub
-⭐ Highlights
-✅ Full Stack Django Project
-✅ AI-Powered Travel Assistant
-✅ Google Gemini Integration
-✅ Hotel Booking Workflow
-✅ Provider Dashboard
-✅ Email Notifications
-✅ MySQL Database
-✅ Responsive UI
-✅ Real-world CRUD Operations
-✅ Production-ready Architecture
+MySQL database integration
+
+Hotel and image management
+
+Booking request and approval system
+
+Automated email communication
+
+Responsive Bootstrap interface
+
+Real-world CRUD and database operations
